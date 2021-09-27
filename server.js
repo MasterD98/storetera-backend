@@ -48,10 +48,6 @@ const storeterra = {
     }]
 }
 
-const interval = setInterval(()=>{
-    ChangeVariables();
-  }, 3000);
-
 const ChangeVariables=()=>{
     storeterra.cards[0].outputLoad.value=Math.floor((Math.random() * 10) + 10);
     storeterra.cards[1].totalEnergy.value=Math.floor((Math.random() * 100) + 8000);;
@@ -90,6 +86,7 @@ const ChangeVariables=()=>{
 
 app.use(cors())
 app.get('/',(req,res)=>{
+    ChangeVariables();
     res.json(storeterra);
 })
 
