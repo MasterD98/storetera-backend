@@ -11,16 +11,14 @@ const db=knex({
         user : 'remote2',
         password : 'senura123',
         database : 'str108221',
-        tablename : "ai_datapoints"
     }
 })
 
 app.use(cors())
 app.get('/',(req,res)=>{
-    db.select('*').from('users').where('id',id)
-    .then(user=>{
-        if(user.length){
-            res.json(user[0])
+    db.select('*').from('ai_datapoints').then(data=>{
+        if(data.length){
+            res.status(400).json(data)
         }else{
             res.status(400).json("Not Found")
         }
