@@ -17,8 +17,13 @@ const db=knex({
 app.use(cors())
 app.get('/',(req,res)=>{
     db.select('*').from('ai_datapoints').then(data=>{
+        const datas=[]
+        let i=0
         if(data.length){
-            res.status(400).json(data)
+            for (let index = data.length-1; index > data.length-6; index--) {
+                datas[i++]=data[index]
+            }
+            res.status(400).json(datas)
         }else{
             res.status(400).json("Not Found")
         }
