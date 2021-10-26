@@ -19,7 +19,7 @@ const databases={
 }
 
 app.use(cors())
-app.get('/:id',(req,res)=>{
+app.get('/ai_datapoints/:id',(req,res)=>{
 
     const db=knex({
         client: 'mysql',
