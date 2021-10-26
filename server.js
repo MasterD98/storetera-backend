@@ -45,7 +45,32 @@ app.get('/ai_datapoints/:id',(req,res)=>{
     })
     .catch(err=>{res.status(400).json('Error getting user')})
 })
+app.get('/tommrrow_prediction/:id',(req,res)=>{
 
+    const db=knex({
+        client: 'mysql',
+        connection: {
+            host : '35.184.42.199',
+            port : 3306,
+            user : 'remote2',
+            password : 'senura123',
+            database : databases[req.params.id],
+        }
+    })
+    db.select('*').from('tommrrow_prediction').then(data=>{
+        const datas=[]
+        let i=0
+        if(data.length){
+            for (let index = data.length-1; index > data.length-6; index--) {
+                datas[i++]=data[index]
+            }
+            res.status(400).json(datas)
+        }else{
+            res.status(400).json("Not Found")
+        }
+    })
+    .catch(err=>{res.status(400).json('Error getting user')})
+})
 app.listen(process.env.PORT || 3000,()=>{
     console.log(`${process.env.PORT}`);
 })
