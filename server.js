@@ -2,20 +2,35 @@ const express = require('express');
 const app=express();
 const cors=require('cors');
 const knex=require('knex');
+const database=''
 
-const db=knex({
-    client: 'mysql',
-    connection: {
-        host : '35.184.42.199',
-        port : 3306,
-        user : 'remote2',
-        password : 'senura123',
-        database : 'str108221',
-    }
-})
+
+const databases={
+    B3E19380158221 :"str108221",
+    B3E19380183172 :"str043172",
+    B3E19380049001 :"str069001", 
+    B3E19380030377 :"str070377",
+    B3E19380003220 :"str053220",
+    B3E19380050504 :"str030504",
+    B3E19380101824 :"str081824",
+    B3E19380073841 :"str023941",
+    B3E19380091442 :"str011442",
+    B3E19380135111 :"str095111",
+}
 
 app.use(cors())
-app.get('/',(req,res)=>{
+app.get('/:id',(req,res)=>{
+
+    const db=knex({
+        client: 'mysql',
+        connection: {
+            host : '35.184.42.199',
+            port : 3306,
+            user : 'remote2',
+            password : 'senura123',
+            database : databases[req.params.id],
+        }
+    })
     db.select('*').from('ai_datapoints').then(data=>{
         const datas=[]
         let i=0
