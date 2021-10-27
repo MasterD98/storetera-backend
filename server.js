@@ -91,12 +91,11 @@ app.post('/login',(req,res)=>{
     }
     db.select('username','password').from('accounts').where('username','=',username)
     .then(data=>{
-        if(data.password==password){
+        if(data[0].password==password){
             res.status(400).json({type:"admin"})
         }else{
             res.status(400).json({type:"Invalid"})
-        }
-        console.log(data);  
+        }  
     })
     .catch(err=>{res.status(400).json({type:"Invalid"})})
 
