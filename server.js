@@ -100,6 +100,20 @@ app.post('/login',(req,res)=>{
     .catch(err=>{res.status(400).json({type:"Invalid"})})
 
 })
+app.post('/signin',(req,res)=>{
+    const{username,password}=req.body;
+    if(!username||!password){
+        return res.status(200).json({type:"Invalid"});
+    }
+        if(username==="admin"&&password==="123"){
+            res.status(200).json({type:"admin"})
+        }else if(username==="user"&&password==="123"){
+            res.status(200).json({type:"user"})
+        }else{
+            res.status(200).json({type:"Invalid"})
+        }  
+
+})
 app.listen(process.env.PORT || 3000,()=>{
     console.log(`${process.env.PORT}`);
 })
