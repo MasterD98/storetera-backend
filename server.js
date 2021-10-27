@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser=require('body-parser');
 const app=express();
 const cors=require('cors');
 const knex=require('knex');
@@ -19,6 +20,7 @@ const databases={
 }
 
 app.use(cors())
+app.use(bodyParser.json());
 app.get('/ai_datapoints/:id',(req,res)=>{
 
     const db=knex({
@@ -70,6 +72,34 @@ app.get('/tommrrow_prediction/:id',(req,res)=>{
         }
     })
     .catch(err=>{res.status(400).json('Error getting user')})
+})
+
+app.post('/login',(req,res)=>{
+    const db=knex({
+        client: 'mysql',
+        connection: {
+            host : '35.184.42.199',
+            port : 3306,
+            user : 'remote2',
+            password : 'senura123',
+            database : 'login',
+        }
+    })
+    const{username,password}=req.body;
+    if(!username||!password){
+        return res.status(400).json({type:"Invalid"});
+    }
+    db.select('username','password').from('accounts').where('username','=',username)
+    .then(data=>{
+        if(data.password==password){
+            res.status(400).json({type:"admin"})
+        }else{
+            res.status(400).json({type:"Invalid"})
+        }
+        console.log(data);  
+    })
+    .catch(err=>{res.status(400).json({type:"Invalid"})})
+
 })
 app.listen(process.env.PORT || 3000,()=>{
     console.log(`${process.env.PORT}`);
