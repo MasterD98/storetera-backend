@@ -40,9 +40,9 @@ app.get('/ai_datapoints/:id',(req,res)=>{
             for (let index = data.length-1; index > data.length-6; index--) {
                 datas[i++]=data[index]
             }
-            res.status(400).json(datas)
+            res.status(200).json(datas)
         }else{
-            res.status(400).json("Not Found")
+            res.status(200).json("Not Found")
         }
     })
     .catch(err=>{res.status(400).json('Error getting user')})
@@ -66,9 +66,9 @@ app.get('/tommrrow_prediction/:id',(req,res)=>{
             for (let index = data.length-1; index > data.length-6; index--) {
                 datas[i++]=data[index]
             }
-            res.status(400).json(datas)
+            res.status(200).json(datas)
         }else{
-            res.status(400).json("Not Found")
+            res.status(200).json("Not Found")
         }
     })
     .catch(err=>{res.status(400).json('Error getting user')})
@@ -87,14 +87,14 @@ app.post('/login',(req,res)=>{
     })
     const{username,password}=req.body;
     if(!username||!password){
-        return res.status(400).json({type:"Invalid"});
+        return res.status(200).json({type:"Invalid"});
     }
     db.select('username','password').from('accounts').where('username','=',username)
     .then(data=>{
         if(data[0].password==password){
-            res.status(400).json({type:"admin"})
+            res.status(200).json({type:"admin"})
         }else{
-            res.status(400).json({type:"Invalid"})
+            res.status(200).json({type:"Invalid"})
         }  
     })
     .catch(err=>{res.status(400).json({type:"Invalid"})})
