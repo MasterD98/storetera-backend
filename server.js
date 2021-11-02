@@ -93,6 +93,7 @@ app.get('/raw_data/:id',(req,res)=>{
             for (let index = data.length-1; index > data.length-101; index--) {
                 datas[i++]=data[index]
             }
+            res.status(200).json(datas)
         }else{
             res.status(200).json("Not Found")
         }
