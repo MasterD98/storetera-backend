@@ -74,6 +74,32 @@ app.get('/tommrrow_prediction/:id',(req,res)=>{
     .catch(err=>{res.status(400).json('Error getting user')})
 })
 
+app.get('/raw_data/:id',(req,res)=>{
+
+    const db=knex({
+        client: 'mysql',
+        connection: {
+            host : '35.184.42.199',
+            port : 3306,
+            user : 'remote2',
+            password : 'senura123',
+            database : databases[req.params.id],
+        }
+    })
+    db.select('*').from('raw_data').then(data=>{
+        const datas=[]
+        let i=0
+        if(data.length){
+            for (let index = data.length-1; index > data.length-101; index--) {
+                datas[i++]=data[index]
+            }
+        }else{
+            res.status(200).json("Not Found")
+        }
+    })
+    .catch(err=>{res.status(400).json('Error getting user')})
+})
+
 app.post('/login',(req,res)=>{
     const db=knex({
         client: 'mysql',
@@ -100,6 +126,6 @@ app.post('/login',(req,res)=>{
     .catch(err=>{res.status(400).json({type:"Invalid"})})
 
 })
-app.listen(process.env.PORT || 3000,()=>{
+app.listen(process.env.PORT || 3001,()=>{
     console.log(`${process.env.PORT}`);
 })
