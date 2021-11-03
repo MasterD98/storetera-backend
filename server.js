@@ -86,7 +86,7 @@ app.get('/raw_data/:id',(req,res)=>{
             database : databases[req.params.id],
         }
     })
-    db.select('*').from('raw_data').then(data=>{
+    db.select('*').from('raw_data').orderBy('index','decs').limit(100).then(data=>{
         const datas=[]
         let i=0
         if(data.length){
@@ -127,6 +127,6 @@ app.post('/login',(req,res)=>{
     .catch(err=>{res.status(400).json({type:"Invalid"})})
 
 })
-app.listen(process.env.PORT || 3001,()=>{
+app.listen(process.env.PORT || 3000,()=>{
     console.log(`${process.env.PORT}`);
 })
