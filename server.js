@@ -101,6 +101,28 @@ app.get('/raw_data/:id',(req,res)=>{
     .catch(err=>{res.status(400).json('Error getting user')})
 })
 
+app.get('/storhubs/:id',(req,res)=>{
+
+    const db=knex({
+        client: 'mysql',
+        connection: {
+            host : '35.184.42.199',
+            port : 3306,
+            user : 'remote2',
+            password : 'senura123',
+            database : 'storhubs',
+        }
+    })
+    db.select('*').from(req.params.id).then(data=>{
+        if(data.length){
+            res.status(200).json(data)
+        }else{
+            res.status(200).json("Not Found")
+        }
+    })
+    .catch(err=>{res.status(400).json('Error getting user')})
+})
+
 app.post('/login',(req,res)=>{
     const db=knex({
         client: 'mysql',
